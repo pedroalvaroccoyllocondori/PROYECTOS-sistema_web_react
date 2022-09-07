@@ -1,6 +1,6 @@
-import {useState,useEffect} from 'react'
+import {useState} from 'react'
 import {useAuthContex} from '../contextos/authContext'
-
+import md5 from 'md5'
 const Login = ()=> {
 
 
@@ -8,22 +8,7 @@ const Login = ()=> {
   const [userLogin,setUserLogin]=useState('')
   const [userPassword,setUserPassword]=useState('')
   const [message,setMessage]=useState(false)
-  const[informacion,setInformacion]=useState(null)
-
-
-
-  // useEffect(()=>{
-  // fetch("http://localhost/php_rest_myblog/api/usuarios/read_single.php?correo=pedro_alvaro@outlook.com.pe&password=202cb962ac59075b964b07152d234b70")
-  // .then((res) => res.json())
-  // .then(
-  //     // data=>console.log(data)
-  //     data=>setInformacion(data)
-  //     )
-
-  // },[])
-
-
-
+  // const[informacion,setInformacion]=useState()
 
   function handleInputChange(event){
     setUserLogin(event.target.value)
@@ -31,41 +16,21 @@ const Login = ()=> {
   function handleInputChangePassword(event){
     setUserPassword(event.target.value)
   }
-  
 
+  const usuario_existe = async()=>{
+    let result = await 
+    fetch(`http://localhost/php_rest_myblog/api/usuarios/read_single.php?correo=${userLogin}&password=${md5(userPassword)}`)
+    result=await result.json()
+    return result.existe
+  }
 
-
-  function handlerSubmit(event){
-
-    //  function logear(correo,password){
-
-    //   fetch(`http://localhost/php_rest_myblog/api/usuarios/read_single.php?correo=${correo}&password=${password}`)
-    //   .then((res) => res.json())
-    //   .then(
-    //       // data=>console.log(data)
-    //       data=>setInformacion(data)
-    //       )
-    //    mensaje=informacion.mensaje
-    //    return mensaje
-    // }
-    
-  
-    // const login= logear(correo,password)
-
-
-    event.preventDefault()
-
-
-    if (userLogin==='admin' && userPassword==='123') {
-      login()
-      
-    }else{
-      setMessage(true)
-    }
-
-
-
-    
+  async function handlerSubmit(event){
+      event.preventDefault()
+      if(await usuario_existe()){
+        login()
+      }else{
+        setMessage(true)
+      }
   }
 
     return (
