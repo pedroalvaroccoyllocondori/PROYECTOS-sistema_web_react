@@ -6,7 +6,7 @@ const PrivateRoute = ()=> {
     const {isAuthenticated}=useAuthContex()
 
     if(isAuthenticated){
-        return <Navigate to="/privado"></Navigate>
+        return <Navigate to="/portal"></Navigate>
 
     }
 
