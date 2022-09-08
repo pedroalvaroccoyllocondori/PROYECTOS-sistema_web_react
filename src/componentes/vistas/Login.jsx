@@ -1,9 +1,11 @@
 import {useState} from 'react'
 import {useAuthContex} from '../contextos/authContext'
 import md5 from 'md5'
+import {guardarNombre} from '../store/action'
+import {connect} from 'react-redux'
 
 
-const Login = ()=> {
+const Login = ({guardarNombre})=> {
 
 
   const {login}=useAuthContex()
@@ -11,6 +13,9 @@ const Login = ()=> {
   const [userPassword,setUserPassword]=useState('')
   const [message,setMessage]=useState(false)
   // const[informacion,setInformacion]=useState()
+
+
+
 
   function handleInputChange(event){
     setUserLogin(event.target.value)
@@ -29,7 +34,9 @@ const Login = ()=> {
   async function handlerSubmit(event){
       event.preventDefault()
       if(await usuario_existe()){
+        await guardarNombre('alvaro ccoyllo')
         login()
+
       }else{
         setMessage(true)
       }
@@ -45,6 +52,7 @@ const Login = ()=> {
               <div className="fadeIn first">
                 <i className="icon ion-md-contact lead tamano"></i>
               </div>
+              <button onClick={()=> guardarNombre()}>dsfsda</button>
     
         {/* <!-- Login Form --> */}
               <form onSubmit={handlerSubmit}>
@@ -62,5 +70,5 @@ const Login = ()=> {
     );
     
   }
-  export default Login;
+  export default connect(null,{guardarNombre}) (Login);
   
