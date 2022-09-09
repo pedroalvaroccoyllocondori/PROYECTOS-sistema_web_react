@@ -1,14 +1,18 @@
 const initialState ={
-    nombre:'',
+    datosUsuario:'',
 }
+// const initialState =''
 
-export default (state = initialState,action) => {
-    if(action.type === 'GUARDAR_NOMBRE'){
-        return{
-            ...state,
-            nombre: action.payload,
-        }
+export default function nombreReducer(state = initialState,action){
+
+    switch (action.type) {
+        case 'GUARDAR_NOMBRE':
+            return{
+                ...state,
+                datosUsuario: action.payload,
+            }
+        default:
+            return state
+
     }
-
-    return state
 }

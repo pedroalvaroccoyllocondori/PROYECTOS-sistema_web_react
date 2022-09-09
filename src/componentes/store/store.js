@@ -2,7 +2,7 @@ import {createStore,combineReducers} from 'redux'
 import nombreReducer from './reducer'
 
 const reducers=combineReducers({
-    nombreReducer
+  data:nombreReducer
 })
 
 const store=createStore(reducers, 

@@ -2,7 +2,7 @@ import { createContext,useCallback,useMemo,useState,useContext } from "react";
 import PropTypes from "prop-types"
 
 
-const MY_AUTH_APP='MY_AUTH_APP_1'
+const MY_AUTH_APP='MY_AUTH_APP'
 
 export const Authcontext=createContext();
 
