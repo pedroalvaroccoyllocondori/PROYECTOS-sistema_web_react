@@ -1,0 +1,106 @@
+
+.App {
+    display: flex;
+    font-family: "IBM Plex Sana Thai Looped", sans-serif;
+    color: rgb(255, 255, 255);
+    // background: linear-gradient(179deg, #176eb5, #d545d7);
+    background: linear-gradient(179deg, #2b5876, #4e4376);
+    // text-shadow: 1px 0px 2px #8dc4f0;
+  }
+  
+  
+// .App-Color {
+ 
+//     color: rgb(134, 131, 131);
+ 
+//   }
+  
+  .body_container {
+    flex: 1;
+  }
+  .sidebar_container {
+    /* flex: auto; */
+  
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    left:0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .sidebar{
+    
+    display: flex;
+    width: 20rem;
+    height: 90%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 15px;
+    margin: 10px;
+    background: rgba(170, 148, 148, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(5.5px);
+    border-radius:10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+  }
+  .lines_icon{
+    display: flex;
+    align-self: flex-end;
+    border-radius: 5px;
+  }
+  
+  .profile{
+  display: flex;
+  align-items: center;
+  padding: .2rem;
+  border-radius: 5%;
+  margin-bottom: 1rem;
+  }
+  
+  .profile>img{
+    width: 100%;
+    // border-radius: 10%;
+    object-fit: contain;
+
+  }
+  
+  .groups{
+    display: flex;
+    flex-direction: column;
+    width: 100%
+  }
+  .group{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  
+  }
+  h3{
+    font-size: 1rem; 
+    margin: 10px 0px 10px 0px;
+  }
+  
+  
+  
+  
+  //////////items////////
+  .item{
+    display: flex;
+    padding: 6px 10px 6px 10px;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 10px;
+  }
+  .icon{
+    margin-right: 0.5rem;
+    margin-top: 6px
+  }
+  
+  
+  //////////
+  .dis{
+    border: 1px solid red;
+    display:flex
+  }

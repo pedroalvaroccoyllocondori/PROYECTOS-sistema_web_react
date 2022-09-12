@@ -17,6 +17,7 @@ export function AuthContextProvider({children}){
 
     const logout=useCallback(function(){
         window.localStorage.removeItem(MY_AUTH_APP)
+        window.localStorage.removeItem('persist:main-root')
         setIsAuthenticated(false)
     },[])
 

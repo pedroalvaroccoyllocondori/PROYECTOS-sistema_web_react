@@ -4,12 +4,17 @@ import App from './componentes/App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from 'react-redux'
-import store from './componentes/store/store'
+import store ,{Persistor} from './componentes/store/store'
+import {PersistGate} from 'redux-persist/integration/react'
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
+      <PersistGate loading={null} persistor={Persistor}>
         <App />
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 );

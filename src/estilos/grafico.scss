@@ -1,0 +1,24 @@
+.conteiner-grafico{
+ 
+        display: flex;
+        // height: 2rem;
+        justify-content: flex-start;
+        align-items: center;
+        flex-direction: column;
+        padding: 15px;
+        margin: 1rem .5rem;
+        background: rgba(170, 148, 148, 0.3);
+    
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        backdrop-filter: blur(5.5px);
+        border-radius:10px;
+        border: 1px solid rgba( 255, 255, 255, 0.18 );
+
+}
+.conteiner-select{
+        // background-color: white;
+        // border: 1px solid red;
+        display:flex;
+        gap :1rem;
+        margin: 1rem;
+}
