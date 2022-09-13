@@ -3,7 +3,7 @@ import * as React from 'react';
 import Sidebar from "../sidebar/Sidebar";
 import {useSelector} from 'react-redux'
 import Usuario from "../cartilla_usuario/usuario";
-import {useState} from 'react'
+import {useState,useEffect} from 'react'
 
 
 import ReactFC from "react-fusioncharts";
@@ -11,10 +11,10 @@ import FusionCharts from "fusioncharts";
 import Column2D from "fusioncharts/fusioncharts.charts";
 import FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
 
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+// import InputLabel from '@mui/material/InputLabel';
+// import MenuItem from '@mui/material/MenuItem';
+// import FormControl from '@mui/material/FormControl';
+// import Select from '@mui/material/Select';
 
 
 
@@ -30,6 +30,10 @@ import Button from '@mui/material/Button';
 
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+
+import {es} from 'date-fns/locale'
+
 
 const darkTheme = createTheme({
   palette: {
@@ -50,16 +54,34 @@ const darkTheme = createTheme({
 });
 
 
-
-
 ReactFC.fcRoot(FusionCharts, Column2D, FusionTheme);
 
 const Ingresos = ()=> {
 
+  useEffect(() => {
+
+     fetch('http://localhost/php_rest_myblog/api/ingresos/read.php', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "fecha_inicio":`${fechaInicio}`,
+        "fecha_fin":`${fechaFin}`,
+        "id_usuario":"1"
+    })
+    })
+    .then((response) => response.json())  
+    .then(data =>setChartData(data) )
+  }, []);
+
+  const [fechaInicio, setFechaInicio] = useState("2022/01/15");
+  const [fechaFin, setFechafin] = useState("2022/12/01");
+  const [ chartData , setChartData] = useState([]);
 
 
-  const [fechaInicio, setFechaInicio] = useState(null);
-  const [fechaFin, setFechafin] = useState(null);
+  
 
   // const [age, setAge] = useState('');
 
@@ -67,42 +89,6 @@ const Ingresos = ()=> {
   //   setAge(event.target.value);
   // };
 
-
-
-  const chartData = [
-    {
-      label: "Venezuela",
-      value: "290"
-    },
-    {
-      label: "Saudi",
-      value: "260"
-    },
-    {
-      label: "Canada",
-      value: "180"
-    },
-    {
-      label: "Iran",
-      value: "140"
-    },
-    {
-      label: "Russia",
-      value: "115"
-    },
-    {
-      label: "UAE",
-      value: "100"
-    },
-    {
-      label: "US",
-      value: "30"
-    },
-    {
-      label: "China",
-      value: "30"
-    }
-  ];
 
   const chartConfigs = {
     type: "column2d", // The chart type
@@ -115,7 +101,7 @@ const Ingresos = ()=> {
         subCaption: "RESUMEN",
         xAxisName: "MESES",
         yAxisName: "INGRESO",
-        numberSuffix: "S./",
+        numberprefix: "S./",
         theme: "fusion"
       },
       data: chartData
@@ -155,33 +141,40 @@ const Ingresos = ()=> {
    
 
 
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <LocalizationProvider dateAdapter={AdapterDateFns} locale={es}>
       <DatePicker
+        views={[ 'month','year']}
         label="FECHA INICIO"
+        minDate="2022/01/01"
+        maxDate="2023/12/31"
         value={fechaInicio}
+
         onChange={(newValue) => {
 
           var convertedStartDate = new Date(newValue)
           var month = convertedStartDate.getMonth() + 1
-          var day = convertedStartDate.getDay();
+          var day = '01';
           var year = convertedStartDate.getFullYear();
-          var shortStartDate = String( month ).padStart(2, '0')+ "/" + String(day).padStart(2, '0') + "/" + year;
+          var shortStartDate =  year + "/" + String( month ).padStart(2, '0')+ "/" + String(day).padStart(2, '0') ;
           setFechaInicio(shortStartDate );
         }}
         renderInput={(params) => <TextField {...params} />}
       />
     </LocalizationProvider>
     
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
+    <LocalizationProvider dateAdapter={AdapterDateFns} locale={es}>
       <DatePicker
+        views={[ 'month','year']}
         label="FECHA FIN"
         value={fechaFin}
+        minDate="2022/01/01"
+        maxDate="2023/12/31"
         onChange={(newValue) => {
           var convertedStartDate = new Date(newValue)
           var month = convertedStartDate.getMonth() + 1
-          var day = convertedStartDate.getDay();
+          var day = '01';
           var year = convertedStartDate.getFullYear();
-          var shortStartDate = String( month ).padStart(2, '0')+ "/" + String(day).padStart(2, '0') + "/" + year;
+          var shortStartDate =   year + "/" + String( month ).padStart(2, '0')+ "/" + String(day).padStart(2, '0');
           setFechafin(shortStartDate );
         }}
         renderInput={(params) => <TextField {...params} />}
@@ -189,7 +182,22 @@ const Ingresos = ()=> {
     </LocalizationProvider>
 
 
-    <Button variant="contained" color="primary"  >
+    <Button variant="contained" color="primary"  onClick={ async() => {
+              const rawResponse = await fetch('http://localhost/php_rest_myblog/api/ingresos/read.php', {
+              method: 'POST',
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                "fecha_inicio":`${fechaInicio}`,
+                "fecha_fin":`${fechaFin}`,
+                "id_usuario":"1"
+            })
+            });
+            const content = await rawResponse.json();
+            setChartData(content)
+      }} >
       <SearchIcon  style={{ color: 'dark' }}/>
     </Button>
 
