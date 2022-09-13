@@ -38,7 +38,7 @@ const Login = ()=> {
       // console.log(datos)
 
       if(datos.existe){
-        dispatch(guardarNombre({nombre:datos.nombre,email:datos.correo}))
+        dispatch(guardarNombre({nombre:datos.nombre,email:datos.correo,id:datos.id}))
         window.localStorage.setItem('nombre',datos.nombre)
 
         login()
